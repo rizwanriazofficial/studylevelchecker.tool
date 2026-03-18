@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pakistan Marks & Degree Converters for Study Abroad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f3f4f6;
+      color: #111827;
+    }
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px 24px 32px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.16);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 1.8rem;
+    }
+    .lead {
+      margin-top: 4px;
+      margin-bottom: 18px;
+      color: #4b5563;
+      font-size: 0.95rem;
+    }
+    .mode-switch {
+      display: inline-flex;
+      border-radius: 999px;
+      background: #e5e7eb;
+      padding: 3px;
+      margin-bottom: 18px;
+    }
+    .mode-btn {
+      border: none;
+      background: transparent;
+      padding: 7px 16px;
+      font-size: 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      color: #4b5563;
+      font-weight: 500;
+      min-width: 170px;
+      text-align: center;
+    }
+    .mode-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.4);
+    }
+    .disclaimer {
+      margin-bottom: 16px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      font-size: 0.8rem;
+      color: #92400e;
+    }
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 18px;
+      align-items: end;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.9rem;
+    }
+    label {
+      font-weight: 600;
+      color: #111827;
+    }
+    select,
+    input[type="number"] {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 0.9rem;
+      outline: none;
+      background: #f9fafb;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+    select:focus,
+    input[type="number"]:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.28);
+      background: #ffffff;
+    }
+    .hint {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+    button.primary {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.45);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.12s ease;
+    }
+    button.primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.5);
+    }
+    button.primary:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+    }
+    .error {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      margin-bottom: 12px;
+      display: none;
+    }
+    .results-wrapper {
+      margin-top: 10px;
+      display: none;
+    }
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .results-header h2 {
+      margin: 0;
+      font-size: 1.12rem;
+    }
+    .badge {
+      font-size: 0.78rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 12px 12px 14px;
+    }
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flag {
+      font-size: 1.1rem;
+    }
+    .equiv {
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+      color: #111827;
+    }
+    .equiv span.label {
+      font-weight: 600;
+    }
+    .summary-bar {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      font-size: 0.86rem;
+      color: #166534;
+    }
+    .summary-bar strong {
+      font-weight: 600;
+    }
+    .inline-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+    .inline-options label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      cursor: pointer;
+    }
+    .inline-options input[type="radio"] {
+      transform: scale(0.95);
+      accent-color: #2563eb;
+    }
+    @media (max-width: 640px) {
+      .container {
+        padding: 18px 16px 24px;
+      }
+      h1 {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pakistan Study Abroad – Marks & Degree Converters</h1>
+    <p class="lead">
+      Two separate tools: one converts your <strong>Pakistani marks</strong> into approximate
+      <strong>foreign grading systems</strong>, and the other converts your
+      <strong>Pakistani degree level</strong> into typical <strong>international degree levels</strong>.
+    </p>
+    <div class="disclaimer">
+      <strong>Important:</strong> All conversions are <em>approximate guidance</em> based on
+      common admission practices. Each foreign university or authority uses its own official
+      equivalence rules.
+    </div>
+
+    <div class="mode-switch">
+      <button type="button" class="mode-btn active" id="marksModeBtn">
+        🧮 Marks Converter (Pakistan ➝ Abroad)
+      </button>
+      <button type="button" class="mode-btn" id="degreeModeBtn">
+        🎓 Degree Level Converter (Pakistan ➝ Abroad)
+      </button>
+    </div>
+
+    <div id="errorBox" class="error"></div>
+
+    <div id="marksSection">
+      <div class="section-label">Marks Converter – Pakistan ➝ Abroad Grading</div>
+      <form id="marksForm">
+        <div class="field">
+          <label for="marksType">Marks type</label>
+          <select id="marksType" name="marksType">
+            <option value="percentage" selected>Percentage (%)</option>
+            <option value="cgpa4">CGPA (out of 4.0)</option>
+          </select>
+          <div class="hint">Select how your marks are recorded on your transcript.</div>
+        </div>
+
+        <div class="field">
+          <label for="marksValue" id="marksLabel">Your marks</label>
+          <input
+            id="marksValue"
+            name="marksValue"
+            type="number"
+            step="0.01"
+            placeholder="e.g. 68"
+          />
+          <div class="hint" id="marksHint">If percentage: enter 0–100.</div>
+        </div>
+
+        <div class="field">
+          <label for="marksLevel">Current level of study (for context)</label>
+          <select id="marksLevel" name="marksLevel">
+            <option value="intermediate">Intermediate / FA / FSc</option>
+            <option value="bachelor" selected>Bachelor (BS / BA / BSc / BCom)</option>
+            <option value="master">Master / MS / MPhil</option>
+          </select>
+          <div class="hint">Used in description only – does not change raw conversion.</div>
+        </div>
+
+        <div class="field">
+          <label for="targetCountry">Target country view</label>
+          <select id="targetCountry" name="targetCountry">
+            <option value="all" selected>Show all main destinations</option>
+            <option value="UK">United Kingdom</option>
+            <option value="USA">United States</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+            <option value="Germany">Germany</option>
+            <option value="France">France</option>
+          </select>
+          <div class="hint">Filter if you only care about one destination.</div>
+        </div>
+
+        <div class="field">
+          <button type="submit" class="primary">Convert Marks</button>
+        </div>
+      </form>
+
+      <div class="results-wrapper" id="marksResultsWrapper">
+        <div class="results-header">
+          <h2>Marks Conversion – Approximate Equivalents</h2>
+          <span class="badge">For guidance only – not official</span>
+        </div>
+        <div class="results-grid" id="marksResultsGrid"></div>
+        <div class="summary-bar" id="marksSummaryBar"></div>
+      </div>
+    </div>
+
+    <div id="degreeSection" style="display:none;">
+      <div class="section-label">Degree Level Converter – Pakistan ➝ Abroad</div>
+      <form id="degreeForm">
+        <div class="field" style="grid-column:1/-1;">
+          <label>How do you want to select your level?</label>
+          <div class="inline-options">
+            <label>
+              <input type="radio" name="degreeMode" value="degree" checked />
+              <span>By degree name</span>
+            </label>
+            <label>
+              <input type="radio" name="degreeMode" value="years" />
+              <span>By years of education</span>
+            </label>
+            <label>
+              <input type="radio" name="degreeMode" value="both" />
+              <span>Both (recommended)</span>
+            </label>
+          </div>
+          <div class="hint">
+            If the student knows only degree name or only total years, they can choose accordingly.
+          </div>
+        </div>
+
+        <div class="field" id="pkDegreeField">
+          <label for="pkDegree">Your highest Pakistani qualification</label>
+          <select id="pkDegree" name="pkDegree">
+            <option value="matric">Matric / O-Levels</option>
+            <option value="intermediate" selected>Intermediate / FA / FSc / A-Levels</option>
+            <option value="associate">2-Year Bachelor / Associate / Old BA/BSc/BCom</option>
+            <option value="bs4">4-Year BS / Professional Bachelor (16 years)</option>
+            <option value="masters">Master (MA/MSc) after 2-year Bachelor</option>
+            <option value="msmphil">MS / MPhil (after 16-year BS)</option>
+            <option value="phd">PhD / Doctoral</option>
+          </select>
+          <div class="hint">Based loosely on HEC NQF levels (Pakistan).</div>
+        </div>
+
+        <div class="field" id="pkYearsField">
+          <label for="pkYears">Total years of education (approx.)</label>
+          <select id="pkYears" name="pkYears">
+            <option value="10">10 – up to Matric</option>
+            <option value="12" selected>12 – Intermediate / A-Levels</option>
+            <option value="14">14 – 2-Year Bachelor / Associate</option>
+            <option value="16">16 – 4-Year BS / Professional Bachelor</option>
+            <option value="18">18 – Postgraduate (Master / MS / MPhil)</option>
+            <option value="20">20+ – PhD / Postdoctoral</option>
+          </select>
+          <div class="hint">Used for confirmation or when degree name is unknown.</div>
+        </div>
+
+        <div class="field">
+          <label for="degreeGoal">Your main goal</label>
+          <select id="degreeGoal" name="degreeGoal">
+            <option value="study" selected>Study abroad (Bachelor / Master / PhD)</option>
+            <option value="recognition">Get foreign academic recognition / comparison</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <button type="submit" class="primary">Convert Degree Level</button>
+        </div>
+      </form>
+
+      <div class="results-wrapper" id="degreeResultsWrapper">
+        <div class="results-header">
+          <h2>Degree Conversion – Approximate International Level</h2>
+          <span class="badge">Conceptual mapping – not a legal equivalence</span>
+        </div>
+        <div class="results-grid" id="degreeResultsGrid"></div>
+        <div class="summary-bar" id="degreeSummaryBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const marksModeBtn = document.getElementById("marksModeBtn");
+      const degreeModeBtn = document.getElementById("degreeModeBtn");
+      const marksSection = document.getElementById("marksSection");
+      const degreeSection = document.getElementById("degreeSection");
+      const errorBox = document.getElementById("errorBox");
+
+      function setMode(mode) {
+        if (mode === "marks") {
+          marksModeBtn.classList.add("active");
+          degreeModeBtn.classList.remove("active");
+          marksSection.style.display = "block";
+          degreeSection.style.display = "none";
+          clearError();
+        } else {
+          degreeModeBtn.classList.add("active");
+          marksModeBtn.classList.remove("active");
+          degreeSection.style.display = "block";
+          marksSection.style.display = "none";
+          clearError();
+        }
+      }
+
+      marksModeBtn.addEventListener("click", () => setMode("marks"));
+      degreeModeBtn.addEventListener("click", () => setMode("degree"));
+
+      function showError(msg) {
+        errorBox.textContent = msg;
+        errorBox.style.display = "block";
+      }
+      function clearError() {
+        errorBox.textContent = "";
+        errorBox.style.display = "none";
+      }
+
+      const marksForm = document.getElementById("marksForm");
+      const marksType = document.getElementById("marksType");
+      const marksValue = document.getElementById("marksValue");
+      const marksLabel = document.getElementById("marksLabel");
+      const marksHint = document.getElementById("marksHint");
+      const marksLevel = document.getElementById("marksLevel");
+      const targetCountry = document.getElementById("targetCountry");
+      const marksResultsWrapper = document.getElementById("marksResultsWrapper");
+      const marksResultsGrid = document.getElementById("marksResultsGrid");
+      const marksSummaryBar = document.getElementById("marksSummaryBar");
+
+      marksType.addEventListener("change", () => {
+        if (marksType.value === "percentage") {
+          marksLabel.textContent = "Your percentage";
+          marksValue.placeholder = "e.g. 68";
+          marksHint.textContent = "Enter a value between 0 and 100.";
+        } else {
+          marksLabel.textContent = "Your CGPA (out of 4.0)";
+          marksValue.placeholder = "e.g. 3.2";
+          marksHint.textContent = "Enter a value between 0.0 and 4.0.";
+        }
+      });
+
+      function hideMarksResults() {
+        marksResultsWrapper.style.display = "none";
+        marksResultsGrid.innerHTML = "";
+        marksSummaryBar.innerHTML = "";
+      }
+
+      function buildMarksBand(percent) {
+        if (percent > 100) percent = 100;
+        if (percent < 0) percent = 0;
+        if (percent >= 75) {
+          return {
+            band: "Excellent",
+            usGpa: 3.8,
+            caGpa: 3.8,
+            ukClass: "First Class (or strong 2:1)",
+            ausBand: "High Distinction / Distinction",
+            deGrade: 1.3,
+            frScore: 16
+          };
+        } else if (percent >= 65) {
+          return {
+            band: "Very Good",
+            usGpa: 3.3,
+            caGpa: 3.3,
+            ukClass: "Upper Second (2:1)",
+            ausBand: "Distinction / Credit",
+            deGrade: 2.0,
+            frScore: 14
+          };
+        } else if (percent >= 55) {
+          return {
+            band: "Good",
+            usGpa: 2.8,
+            caGpa: 2.8,
+            ukClass: "Lower Second (2:2)",
+            ausBand: "Credit / Pass",
+            deGrade: 2.7,
+            frScore: 12
+          };
+        } else if (percent >= 50) {
+          return {
+            band: "Pass",
+            usGpa: 2.3,
+            caGpa: 2.3,
+            ukClass: "Third Class / Pass",
+            ausBand: "Pass",
+            deGrade: 3.2,
+            frScore: 10
+          };
+        } else {
+          return {
+            band: "Below typical pass",
+            usGpa: 2.0,
+            caGpa: 2.0,
+            ukClass: "Below Pass",
+            ausBand: "Below Pass",
+            deGrade: 3.8,
+            frScore: 8
+          };
+        }
+      }
+
+      function levelLabel(level) {
+        if (level === "intermediate") return "Intermediate / FA / FSc level";
+        if (level === "bachelor") return "Bachelor level";
+        if (level === "master") return "Master / Postgraduate level";
+        return "";
+      }
+
+      marksForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        clearError();
+        hideMarksResults();
+
+        let raw = parseFloat(marksValue.value);
+        if (isNaN(raw)) {
+          showError("Please enter your marks first.");
+          return;
+        }
+
+        let percent;
+        if (marksType.value === "percentage") {
+          if (raw < 0 || raw > 100) {
+            showError("For percentage, please enter a value between 0 and 100.");
+            return;
+          }
+          percent = raw;
+        } else {
+          if (raw < 0 || raw > 4) {
+            showError("For CGPA (out of 4.0), please enter a value between 0.0 and 4.0.");
+            return;
+          }
+          percent = (raw / 4) * 100;
+        }
+
+        const band = buildMarksBand(percent);
+        const levelText = levelLabel(marksLevel.value);
+        const countryFilter = targetCountry.value;
+
+        const countries = [
+          { code: "UK", name: "United Kingdom", flag: "🇬🇧" },
+          { code: "USA", name: "United States", flag: "🇺🇸" },
+          { code: "Canada", name: "Canada", flag: "🇨🇦" },
+          { code: "Australia", name: "Australia", flag: "🇦🇺" },
+          { code: "Germany", name: "Germany", flag: "🇩🇪" },
+          { code: "France", name: "France", flag: "🇫🇷" }
+        ];
+
+        const selectedCountries =
+          countryFilter === "all"
+            ? countries
+            : countries.filter((c) => c.code === countryFilter);
+
+        const cards = [];
+
+        selectedCountries.forEach((c) => {
+          let equiv = "";
+          if (c.code === "UK") {
+            equiv = `${band.ukClass}`;
+          } else if (c.code === "USA") {
+            equiv = `${band.usGpa.toFixed(1)} / 4.0 GPA (approx.)`;
+          } else if (c.code === "Canada") {
+            equiv = `${band.caGpa.toFixed(1)} / 4.0 GPA (approx.)`;
+          } else if (c.code === "Australia") {
+            equiv = `${band.ausBand}`;
+          } else if (c.code === "Germany") {
+            equiv = `${band.deGrade.toFixed(1)} on 1.0–5.0 scale (1.0 = best)`;
+          } else if (c.code === "France") {
+            equiv = `${band.frScore}/20 (approx. French score)`;
+          }
+
+          cards.push(`
+            <div class="card">
+              <h3><span class="flag">${c.flag}</span> ${c.name}</h3>
+              <div class="equiv">
+                <span class="label">Approximate equivalent:</span><br/>
+                ${equiv}
+              </div>
+              <div class="equiv">
+                <span class="label">Based on your Pakistani marks:</span><br/>
+                ${percent.toFixed(1)}% – <strong>${band.band}</strong> band
+                ${levelText ? "(" + levelText + ")" : ""}
+              </div>
+            </div>
+          `);
+        });
+
+        marksResultsGrid.innerHTML = cards.join("");
+
+        let summary = `<strong>Summary:</strong> Your Pakistani marks are about <strong>${percent.toFixed(
+          1
+        )}%</strong>, which sits in the "<strong>${band.band}</strong>" band. `;
+        summary += `This has been converted into rough equivalents in the selected country grading systems. Use this as a guideline only – universities may calculate slightly different equivalences.`;
+
+        marksSummaryBar.innerHTML = summary;
+        marksResultsWrapper.style.display = "block";
+      });
+
+      const degreeForm = document.getElementById("degreeForm");
+      const pkDegreeField = document.getElementById("pkDegreeField");
+      const pkYearsField = document.getElementById("pkYearsField");
+      const pkDegree = document.getElementById("pkDegree");
+      const pkYears = document.getElementById("pkYears");
+      const degreeGoal = document.getElementById("degreeGoal");
+      const degreeResultsWrapper = document.getElementById("degreeResultsWrapper");
+      const degreeResultsGrid = document.getElementById("degreeResultsGrid");
+      const degreeSummaryBar = document.getElementById("degreeSummaryBar");
+      const degreeModeRadios = document.querySelectorAll('input[name="degreeMode"]');
+
+      function updateDegreeModeUI() {
+        const mode = document.querySelector('input[name="degreeMode"]:checked').value;
+        if (mode === "degree") {
+          pkDegreeField.style.display = "flex";
+          pkYearsField.style.display = "none";
+        } else if (mode === "years") {
+          pkDegreeField.style.display = "none";
+          pkYearsField.style.display = "flex";
+        } else {
+          pkDegreeField.style.display = "flex";
+          pkYearsField.style.display = "flex";
+        }
+      }
+
+      degreeModeRadios.forEach((r) =>
+        r.addEventListener("change", updateDegreeModeUI)
+      );
+      updateDegreeModeUI();
+
+      function hideDegreeResults() {
+        degreeResultsWrapper.style.display = "none";
+        degreeResultsGrid.innerHTML = "";
+        degreeSummaryBar.innerHTML = "";
+      }
+
+      function mapPkDegreeToLevel(code) {
+        switch (code) {
+          case "matric":
+            return { pkLabel: "Matric / O-Levels", levelGroup: "secondary" };
+          case "intermediate":
+            return { pkLabel: "Intermediate / FA / FSc / A-Levels", levelGroup: "upperSecondary" };
+          case "associate":
+            return { pkLabel: "2-Year Bachelor / Associate / Old BA/BSc/BCom", levelGroup: "shortCycle" };
+          case "bs4":
+            return { pkLabel: "4-Year BS / Professional Bachelor", levelGroup: "bachelor" };
+          case "masters":
+            return { pkLabel: "Master (MA/MSc) after 2-year Bachelor", levelGroup: "bachelorPlusMaster" };
+          case "msmphil":
+            return { pkLabel: "MS / MPhil (after 16-year BS)", levelGroup: "master" };
+          case "phd":
+            return { pkLabel: "PhD / Doctoral", levelGroup: "doctorate" };
+          default:
+            return { pkLabel: "Unknown", levelGroup: "other" };
+        }
+      }
+
+      function mapYearsToLevelGroup(years) {
+        const y = parseInt(years, 10);
+        if (y <= 10) return "secondary";
+        if (y <= 12) return "upperSecondary";
+        if (y <= 14) return "shortCycle";
+        if (y <= 16) return "bachelor";
+        if (y <= 18) return "master";
+        return "doctorate";
+      }
+
+      function buildInternationalEquivalents(levelGroup) {
+        let UK, USCA, EU, AUS;
+        switch (levelGroup) {
+          case "secondary":
+            UK = "GCSEs (Key Stage 4)";
+            USCA = "High school up to Grade 10 (not full diploma)";
+            EU = "Below EQF Level 4 (lower secondary)";
+            AUS = "Junior secondary level";
+            break;
+          case "upperSecondary":
+            UK = "A-Levels / Level 3 (entry to bachelor)";
+            USCA = "High School Diploma (Grade 12) – entry to bachelor";
+            EU = "EQF Level 4 – Upper secondary completion";
+            AUS = "Year 12 (Senior Secondary Certificate of Education)";
+            break;
+          case "shortCycle":
+            UK = "HND / Foundation Degree (short-cycle higher education)";
+            USCA = "Associate Degree (2-year college degree)";
+            EU = "Bologna short-cycle / EQF Level 5";
+            AUS = "Advanced Diploma / Associate Degree";
+            break;
+          case "bachelor":
+            UK = "Bachelor with Honours (Level 6)";
+            USCA = "Bachelor’s Degree (4-year)";
+            EU = "First cycle (Bologna) / EQF Level 6";
+            AUS = "Bachelor Degree";
+            break;
+          case "bachelorPlusMaster":
+            UK = "Bachelor (ordinary) + Taught Master – roughly equivalent to Level 7 overall";
+            USCA = "Bachelor + Master combination";
+            EU = "First + Second cycle (partial second cycle)";
+            AUS = "Bachelor + Master (coursework)";
+            break;
+          case "master":
+            UK = "Master’s Degree (Level 7)";
+            USCA = "Master’s Degree";
+            EU = "Second cycle (Bologna) / EQF Level 7";
+            AUS = "Master Degree";
+            break;
+          case "doctorate":
+            UK = "Doctoral Degree (Level 8 – PhD)";
+            USCA = "Doctoral Degree (PhD)";
+            EU = "Third cycle (Bologna) / EQF Level 8";
+            AUS = "Doctoral Degree";
+            break;
+          default:
+            UK = "Needs individual evaluation.";
+            USCA = "Needs individual evaluation.";
+            EU = "Needs individual evaluation.";
+            AUS = "Needs individual evaluation.";
+        }
+        return { UK, USCA, EU, AUS };
+      }
+
+      degreeForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        clearError();
+        hideDegreeResults();
+
+        const mode = document.querySelector('input[name="degreeMode"]:checked').value;
+        const yearsText = pkYears.value;
+        const goal = degreeGoal.value;
+
+        let levelGroup;
+        let extraText = "";
+
+        if (mode === "degree" || mode === "both") {
+          const pkInfo = mapPkDegreeToLevel(pkDegree.value);
+          levelGroup = pkInfo.levelGroup;
+          extraText += pkInfo.pkLabel;
+        }
+
+        if (mode === "years" || mode === "both") {
+          const yearsGroup = mapYearsToLevelGroup(yearsText);
+          if (!levelGroup) {
+            levelGroup = yearsGroup;
+          } else if (levelGroup !== yearsGroup) {
+            extraText += ` (years suggest ~${yearsGroup}, degree name suggests ~${levelGroup})`;
+          }
+        }
+
+        if (!levelGroup) {
+          showError("Please select at least a degree name or years of education.");
+          return;
+        }
+
+        const intl = buildInternationalEquivalents(levelGroup);
+
+        const cards = [];
+
+        cards.push(`
+          <div class="card">
+            <h3>🇵🇰 Pakistan – Your Profile</h3>
+            <div class="equiv">
+              <span class="label">Degree / years used:</span><br/>
+              ${
+                mode === "degree"
+                  ? mapPkDegreeToLevel(pkDegree.value).pkLabel
+                  : mode === "years"
+                  ? "~" + yearsText + " years of education"
+                  : mapPkDegreeToLevel(pkDegree.value).pkLabel + " (~" + yearsText + " years)"
+              }
+            </div>
+            <div class="equiv">
+              <span class="label">Internal level group:</span><br/>
+              ${levelGroup}${extraText ? " – " + extraText : ""}
+            </div>
+          </div>
+        `);
+
+        cards.push(`
+          <div class="card">
+            <h3><span class="flag">🇬🇧</span> United Kingdom</h3>
+            <div class="equiv">
+              <span class="label">Approximate equivalent level:</span><br/>
+              ${intl.UK}
+            </div>
+            <div class="equiv">
+              <span class="label">Notes:</span><br/>
+              Exact entry level (Year 1 / Year 2 / Master’s) depends on subject match,
+              grades and university policy.
+            </div>
+          </div>
+        `);
+
+        cards.push(`
+          <div class="card">
+            <h3><span class="flag">🇺🇸</span> USA / <span class="flag">🇨🇦</span> Canada</h3>
+            <div class="equiv">
+              <span class="label">Approximate equivalent level:</span><br/>
+              ${intl.USCA}
+            </div>
+            <div class="equiv">
+              <span class="label">Notes:</span><br/>
+              Credential evaluation agencies (e.g. WES, ECE) may give more precise wording,
+              but this is the general level.
+            </div>
+          </div>
+        `);
+
+        cards.push(`
+          <div class="card">
+            <h3><span class="flag">🇪🇺</span> Europe / <span class="flag">🇦🇺</span> Australia</h3>
+            <div class="equiv">
+              <span class="label">Europe (Bologna / EQF):</span><br/>
+              ${intl.EU}
+            </div>
+            <div class="equiv">
+              <span class="label">Australia:</span><br/>
+              ${intl.AUS}
+            </div>
+          </div>
+        `);
+
+        let recText = "";
+        if (goal === "study") {
+          recText =
+            "Use this mapping to understand at what level you can normally enter in each system (e.g. bachelor, top-up, master, or PhD). For exact admission, universities will check full transcripts, grades and subject match.";
+        } else {
+          recText =
+            "Use this as a reference when filling applications or dealing with credential evaluators. Always refer to the official wording they provide – this tool is only to give you an approximate picture.";
+        }
+
+        cards.push(`
+          <div class="card">
+            <h3>📌 How to Use This Result</h3>
+            <div class="equiv">
+              <span class="label">Guidance:</span><br/>
+              ${recText}
+            </div>
+          </div>
+        `);
+
+        degreeResultsGrid.innerHTML = cards.join("");
+
+        let summary = `<strong>Summary:</strong> Based on your selection `;
+        if (mode === "degree") {
+          summary += `(<strong>${mapPkDegreeToLevel(pkDegree.value).pkLabel}</strong>), `;
+        } else if (mode === "years") {
+          summary += `(~<strong>${yearsText} years</strong> of education), `;
+        } else {
+          summary += `(<strong>${mapPkDegreeToLevel(pkDegree.value).pkLabel}</strong>, ~<strong>${yearsText} years</strong>), `;
+        }
+        summary += `your profile roughly matches the international levels shown above (UK, USA/Canada, Europe, Australia). Treat this as orientation only – official evaluations may use slightly different wording.`;
+
+        degreeSummaryBar.innerHTML = summary;
+        degreeResultsWrapper.style.display = "block";
+      });
+    })();
+  </script>
+</body>
+</html>
